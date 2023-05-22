@@ -1,6 +1,20 @@
 import React from 'react'
+import emailjs from '@emailjs/browser';
 
 function Contact() {
+    const form = useRef();
+
+    const sendEmail = (e) => {
+        e.preventDefault();
+    
+        emailjs.sendForm('service_xpu8ody', 'template_vothe5p', form.current, 'gO7_zotQ-wYN2GYjh')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+      };
+
   return (
     <section id="contact" className='pb-16'>
         <div className="container">
@@ -18,10 +32,13 @@ function Contact() {
                 </div>
 
                 <div className='w-full mt-8 md:mt-0 md:w-1/2 sm:h-[450px] lg:flex items-center bg-indigo-100 px-4 lg:px-8 py-8'>
-                    <form className='w-full'>
+                    <form
+                        ref={form} onSubmit={sendEmail} 
+                        className='w-full'>
                         <div className="mb-5">
                             <input
                                 type='text'
+                                name="user_name"
                                 placeholder='Enter your name'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -29,6 +46,7 @@ function Contact() {
                         <div className="mb-5">
                             <input
                                 type='email'
+                                name="user_email"
                                 placeholder='Enter your email'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -36,6 +54,7 @@ function Contact() {
                         <div className="mb-5">
                             <input
                                 type='text'
+                                name="subject"
                                 placeholder='Subject'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -43,13 +62,17 @@ function Contact() {
                         <div className="mb-5">
                             <textarea
                                 type='text'
+                                name="message"
                                 rows={3}
                                 placeholder='Write your message'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
                         </div>
 
-                        <button className='w-full p-3 focus:outline-none rounded-[5px] bg-smalltextColor text-white hover:bg-headingColor text-center ease-linear duration-150'>
+                        <button
+                            type="submit" 
+                            value="Send" 
+                            className='w-full p-3 focus:outline-none rounded-[5px] bg-smalltextColor text-white hover:bg-headingColor text-center ease-linear duration-150'>
                             Send Message</button>
                     </form>
                 </div>
