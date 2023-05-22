@@ -1,19 +1,57 @@
-import React, { useRef } from 'react'
+import React, { useRef,useState } from 'react'
 import emailjs from '@emailjs/browser'
 
 function Contact() {
     const form = useRef();
+    const [email, setEmail] = useState('')
+    const [name, setName] = useState('')
+    const [subject, setSubject] = useState('')
+    const [message, setMessage] = useState('')
 
     const sendEmail = (e) => {
         e.preventDefault();
+        console.log(e.target[0].value)
+        console.log(e.target[1].value)
+        console.log(e.target[2].value)
+        console.log(e.target[3].value)
     
         emailjs.sendForm('service_xpu8ody', 'template_vothe5p', form.current, 'gO7_zotQ-wYN2GYjh')
           .then((result) => {
               console.log(result.text);
+              setName('')
+              setEmail('')
+              setSubject('')
+              setMessage('')
           }, (error) => {
               console.log(error.text);
           });
+
+        console.log('result: '+e.target[0].value)
+        console.log('result: '+e.target[1].value)
+        console.log('result: '+e.target[2].value)
+        console.log('result: '+e.target[3].value)
       };
+
+    const inputHandler = (e) => {
+        const controlName = e.target.name
+        const controlValue = e.target.value
+
+        switch(controlName) {
+            case 'user_name':
+                setName(controlValue)
+                break
+            case 'user_email':
+                setEmail(controlValue)
+                break
+            case 'subject':
+                setSubject(controlValue)
+                break
+            case 'message':
+            default:
+                setMessage(controlValue)
+                break
+        }
+    }
 
   return (
     <section id="contact" className='pb-16'>
@@ -39,6 +77,8 @@ function Contact() {
                             <input
                                 type='text'
                                 name="user_name"
+                                onChange={inputHandler} 
+                                value={name}
                                 placeholder='Enter your name'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -47,6 +87,8 @@ function Contact() {
                             <input
                                 type='email'
                                 name="user_email"
+                                onChange={inputHandler}
+                                value={email}
                                 placeholder='Enter your email'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -55,6 +97,8 @@ function Contact() {
                             <input
                                 type='text'
                                 name="subject"
+                                onChange={inputHandler}
+                                value={subject}
                                 placeholder='Subject'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
                                 />
@@ -63,6 +107,8 @@ function Contact() {
                             <textarea
                                 type='text'
                                 name="message"
+                                onChange={inputHandler}
+                                value={message}
                                 rows={3}
                                 placeholder='Write your message'
                                 className='w-full p-3 focus:outline-none rounded-[5px]'
