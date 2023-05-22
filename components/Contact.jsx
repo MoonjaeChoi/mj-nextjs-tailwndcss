@@ -10,11 +10,7 @@ function Contact() {
 
     const sendEmail = (e) => {
         e.preventDefault();
-        console.log(e.target[0].value)
-        console.log(e.target[1].value)
-        console.log(e.target[2].value)
-        console.log(e.target[3].value)
-    
+   
         emailjs.sendForm('service_xpu8ody', 'template_vothe5p', form.current, 'gO7_zotQ-wYN2GYjh')
           .then((result) => {
               console.log(result.text);
@@ -25,11 +21,6 @@ function Contact() {
           }, (error) => {
               console.log(error.text);
           });
-
-        console.log('result: '+e.target[0].value)
-        console.log('result: '+e.target[1].value)
-        console.log('result: '+e.target[2].value)
-        console.log('result: '+e.target[3].value)
       };
 
     const inputHandler = (e) => {
